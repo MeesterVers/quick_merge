@@ -47,14 +47,19 @@ def update_settings(): #funcite waarmee de admin de huidige informatie kan aanpa
 		print("login failed.")
 # einde update_settings def
 
-def copy_file():
+def copy():
+	settings = read_settings()
 	user = getpass.getuser()
-	directory_from = "C:/Users/" + user + "/Downloads/stealme/FA_4_vers.pdf"
-	directory_to = "C:/Users/" + user + "/Documents/recieveme"
+	type_of_copy = settings[1].strip()
+	directory_from = "C:/Users/" + user + settings[2].strip()
 	directory_to = "F:/"
-	# if os.path.isdir(directory_from) and os.path.isdir(directory_to):
-	print("True")
-	shutil.copy2(directory_from, directory_to)
+
+	if type_of_copy == "F":
+		shutil.copy2(directory_from, directory_to)
+		print("done")
+	elif type_of_copy == "D":
+		shutil.copytree(directory_from, directory_to)
+		print("done")
 # einde copy function
 
-update_settings()
+copy()
