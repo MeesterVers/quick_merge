@@ -1,6 +1,7 @@
 import shutil
 import os
 import getpass
+import ctypes
 
 def read_settings():
 	settings_lijst = []
@@ -47,12 +48,43 @@ def update_settings(): #funcite waarmee de admin de huidige informatie kan aanpa
 		print("login failed.")
 # einde update_settings def
 
+def find_to_flashdrive():
+	letters = ['A','B','C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S' , 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+	settings = read_settings()
+	name_of_drive = settings[3].strip()
+
+	kernel32 = ctypes.windll.kernel32
+	volumeNameBuffer = ctypes.create_unicode_buffer(1024)
+	fileSystemNameBuffer = ctypes.create_unicode_buffer(1024)
+	serial_number = None
+	max_component_length = None
+	file_system_flags = None
+
+	for letter in letters:
+		rc = kernel32.GetVolumeInformationW(
+		    ctypes.c_wchar_p(letter + ':/'),
+		    volumeNameBuffer,
+		    ctypes.sizeof(volumeNameBuffer),
+		    serial_number,
+		    max_component_length,
+		    file_system_flags,
+		    fileSystemNameBuffer,
+		    ctypes.sizeof(fileSystemNameBuffer)
+		)
+		if volumeNameBuffer.value == name_of_drive:
+			drive_letter = letter
+			break
+	return drive_letter
+#einde find_to_flashdrive def
+
 def copy():
 	settings = read_settings()
 	user = getpass.getuser()
 	type_of_copy = settings[1].strip()
 	directory_from = "C:/Users/" + user + settings[2].strip()
-	directory_to = "F:/"
+	directory_to = "C:/Users/" + user + "/Documents/welloe/"
+	# directory_to = "F:/"
+	directory_to = find_to_flashdrive()
 
 	if type_of_copy == "F":
 		shutil.copy2(directory_from, directory_to)
@@ -62,4 +94,4 @@ def copy():
 		print("done")
 # einde copy function
 
-copy()
+find_to_flashdrive()

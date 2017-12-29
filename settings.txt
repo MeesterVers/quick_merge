@@ -1,4 +1,4 @@
 admin;admin1234
-F
-/Downloads/stealme/FA_4_vers.pdf
+D
+/Downloads/stealme/
 KADEEMVERS
