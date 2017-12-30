@@ -2,6 +2,7 @@ import shutil
 import os
 import getpass
 import ctypes
+import datetime 
 
 def read_settings():
 	settings_lijst = []
@@ -72,7 +73,7 @@ def find_to_flashdrive():
 		    ctypes.sizeof(fileSystemNameBuffer)
 		)
 		if volumeNameBuffer.value == name_of_drive:
-			drive_letter = letter
+			drive_letter = letter + ":/"
 			break
 	return drive_letter
 #einde find_to_flashdrive def
@@ -82,8 +83,11 @@ def copy():
 	user = getpass.getuser()
 	type_of_copy = settings[1].strip()
 	directory_from = "C:/Users/" + user + settings[2].strip()
-	# directory_to = "C:/Users/" + user + "/Documents/welloe/"
-	directory_to = find_to_flashdrive()
+
+	vandaag = datetime.datetime.today() 
+	vandaag = vandaag.strftime("%d_%b_%y_%H%M")
+	# directory_to = "C:/Users/" + user + "/Documents/copy"
+	directory_to = find_to_flashdrive() + "copy_"+ vandaag
 
 	if type_of_copy == "F":
 		shutil.copy2(directory_from, directory_to)
