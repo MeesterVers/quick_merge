@@ -82,8 +82,7 @@ def copy():
 	user = getpass.getuser()
 	type_of_copy = settings[1].strip()
 	directory_from = "C:/Users/" + user + settings[2].strip()
-	directory_to = "C:/Users/" + user + "/Documents/welloe/"
-	# directory_to = "F:/"
+	# directory_to = "C:/Users/" + user + "/Documents/welloe/"
 	directory_to = find_to_flashdrive()
 
 	if type_of_copy == "F":
@@ -93,5 +92,4 @@ def copy():
 		shutil.copytree(directory_from, directory_to)
 		print("done")
 # einde copy function
-
-find_to_flashdrive()
+copy()
