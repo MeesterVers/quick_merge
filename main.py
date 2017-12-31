@@ -5,19 +5,18 @@ import ctypes
 import datetime 
 
 def read_settings():
-	settings_lijst = []
+	settings_list = []
 	read_settings_file = open('settings.txt', 'r')
-	settings_lijst = read_settings_file.readlines()
+	settings_list = read_settings_file.readlines()
 	read_settings_file.close()
-	return settings_lijst
+	return settings_list
 # einde read_settings def
 
 def update_settings(): #funcite waarmee de admin de huidige informatie kan aanpassen
-	settings_lijst = []
+	settings_list = []
 	username = input("Username: ")
-	wachtwoord = input("Wachtwoord: ")
-	login_credentials = username + ";" + wachtwoord + "\n"
-	login_status = "failed"
+	password = input("password: ")
+	login_credentials = username + ";" + password + "\n"
 	type_of_copy = ""
 	directory_from = ""
 	flash_drive_name = ""
@@ -35,16 +34,16 @@ def update_settings(): #funcite waarmee de admin de huidige informatie kan aanpa
 		if type_of_copy == "F" or type_of_copy == "D":
 			flash_drive_name = input("The name of the flash drive: ")
 
-			settings_lijst.append(login_credentials)
-			settings_lijst.append(type_of_copy + "\n")
-			settings_lijst.append(directory_from + "\n")
-			settings_lijst.append(flash_drive_name + "\n")
+			settings_list.append(login_credentials)
+			settings_list.append(type_of_copy + "\n")
+			settings_list.append(directory_from + "\n")
+			settings_list.append(flash_drive_name + "\n")
 
 			write_to_settings = open('settings.txt', 'w')
-			for setting in settings_lijst:
+			for setting in settings_list:
 				write_to_settings.write(setting)
 			write_to_settings.close()
-			print(settings_lijst)
+			print(settings_list)
 	else:
 		print("login failed.")
 # einde update_settings def
@@ -84,10 +83,10 @@ def copy():
 	type_of_copy = settings[1].strip()
 	directory_from = "C:/Users/" + user + settings[2].strip()
 
-	vandaag = datetime.datetime.today() 
-	vandaag = vandaag.strftime("%d_%b_%y_%H%M")
+	today = datetime.datetime.today()
+	today = today.strftime("%d_%b_%y_%H%M")
 	# directory_to = "C:/Users/" + user + "/Documents/copy"
-	directory_to = find_to_flashdrive() + "copy_"+ vandaag
+	directory_to = find_to_flashdrive() + "copy_"+ today
 
 	if type_of_copy == "F":
 		shutil.copy2(directory_from, directory_to)
