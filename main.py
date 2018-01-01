@@ -2,7 +2,8 @@ import shutil
 import os
 import getpass
 import ctypes
-import datetime 
+import datetime
+import string
 
 def read_settings():
 	settings_list = []
@@ -49,7 +50,7 @@ def update_settings(): #funcite waarmee de admin de huidige informatie kan aanpa
 # einde update_settings def
 
 def find_to_flashdrive():
-	letters = ['A','B','C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S' , 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+	letters = list(string.ascii_uppercase)
 	settings = read_settings()
 	name_of_drive = settings[3].strip()
 
