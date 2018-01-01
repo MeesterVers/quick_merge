@@ -84,7 +84,7 @@ def copy():
 	directory_from = "C:/Users/" + user + settings[2].strip()
 
 	today = datetime.datetime.today()
-	today = today.strftime("%d_%b_%y_%H%M")
+	today = today.strftime("%d_%b_%y_%H%M%S")
 	# directory_to = "C:/Users/" + user + "/Documents/copy"
 	directory_to = find_to_flashdrive() + "copy_"+ today
 
